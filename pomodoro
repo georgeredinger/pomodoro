@@ -1,0 +1,44 @@
+#!/bin/bash
+
+function state {
+  echo $1 > ~/bin/pomodoro.state
+}
+
+function log {
+  echo "$1 `date`" >> ~/pomodoro.log
+}
+
+function beep {
+   beep -f 65.4064 -l 100 -n -f 130.813 -l 100 -n -f 261.626 -l 100 -n -f 523.251 -l 100 -n -f 1046.50 -l 100 -n -f 2093.00 -l 100 -n -f 4186.01 -l 100
+}
+
+notify-send Pomodoro "First 25"
+log "Start"
+
+while true; do
+	for i in {1..3} ; do
+		state "25"
+		sleep 25m
+		state "5"
+		notify-send Pomodoro "25 minutes elapses, take a break" -t 60
+		log "Work 25"
+		beep
+		sleep 5m
+		notify-send Pomodoro "5 minute break over take back to work" -t 60
+		beep
+		log "Break 5"
+	done
+
+	state "25"
+	sleep 25m
+	notify-send Pomodoro "25 minutes elapses, take a  long break" -t 60
+	log "Work 25"
+
+	beep
+	state "15"
+	sleep 15m
+	notify-send Pomodoro "15 minute break over take back to work" -t 60
+	log "Break 15"
+	beep
+done
+
